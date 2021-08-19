@@ -1,0 +1,65 @@
+$user = User::find(2);
+        $user->assignRole('writer');
+
+        $users = User::role('writer')->get();
+        dd($users);
+
+         $role = Role::create(['name' => 'writer']);
+        $permission = Permission::create(['name' => 'edit articles']);
+        $role->givePermissionTo($permission);
+
+
+"php.executablePath": "C:/xampp/php.exe",
+    "php.validate.executablePath": "C:/xampp/php/php.exe",
+        $book = Book::find(2);
+        $book->categories()->sync([1,2]);
+
+ord()
+sprintf()
+ $post_id_key = sprintf("%04d", ++$last_borrower->post_id_key);
+
+
+
+ Route::get('{any}', function () {
+    return view('welcome'); // or wherever your React app is bootstrapped.
+})->where('any', '.*');
+
+Notification::send(User::find(1), new DueDateToReturn([
+        'bill_id' => 30061,
+        "name" => "james carter",
+        "case" => "exceeding due date"
+    ]));
+php artisan make:migration add_votes_to_users_table --table=users
+
+"TE[22007]: Invalid datetime format: 1366 Incorrect integer value: 'No' for column `library_management_system`.`books`.`edition` at row 1 (SQL: insert into `books` (`name`, `author_id`, `is_donated`, `price`, `edition`, `condition`, `serial_no`, `slug`, `updated_at`, `created_at`) values (Hello, 1, 1, 1000, No, 1, 1, hello, 2021-07-16 03:33:48, 2021-07-16 03:33:48))"
+message: "SQLSTATE[42S22]: Column not found: 1054 Unknown column 'condtion' in 'field list' (SQL: update `book_records` set `actual_return_date` = 2021-07-23 03:04:01, `condtion` = 1, `book_records`.`updated_at` = 2021-07-23 03:04:01 where `id` = 1)"
+Route::get('{any}', function () {
+        return view('welcome'); // or wherever your React app is bootstrapped.
+    })->where('any', '.*');
+
+    <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Library Management System</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
+        <!-- <link href="{{asset('css/app.css')}}" rel="stylesheet"></link>
+        <link href="{{asset('css/admin.css')}}" rel="stylesheet"></link> -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+        <!-- Styles -->
+
+    </head>
+    <body class="p-0">
+        <div id="app">
+        
+        </div>
+        <!-- <Home /> -->
+    </body>
+    <script src="{{ asset('js/app.js') }}" ></script>
+
+</html>
