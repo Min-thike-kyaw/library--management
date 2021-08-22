@@ -30,6 +30,7 @@
         "js-cookie": "^3.0.0",
         "node-schedule": "^2.0.0",
         "react-bootstrap": "^1.6.0",
+        "react-qr-scanner": "^1.0.0-alpha.7",
         "react-router-dom": "^5.2.0"
     }
 }

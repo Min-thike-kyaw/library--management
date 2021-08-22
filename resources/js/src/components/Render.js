@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import BookApi from "../Api/BookApi";
+import React, { useState } from 'react'
 import { Modal, Button } from "react-bootstrap";
 import BookRecordApi from "../Api/BookRecordApi";
+import { Link, useHistory } from "react-router-dom";
 import AppContainer from "./AppContainer";
-// import { isArray } from "util";
-// import {  ToBorrow } from "../Buttons";
-// import api from "../../api";
-// import times from "../Times";
-  
-const RenderBooks = (props) => {
-    const [books, setBooks] = useState(null);
-    // const [title, setTitle] = useState("")
+import Auth from '../functions/Auth';
+const Render = ({books}) =>
+{ 
     const ToBorrow = (props) => {
         const history = useHistory()
         const [show, setShow] = useState(false);
@@ -74,57 +68,8 @@ const RenderBooks = (props) => {
           </>
         );
       }
-    // const books = props.books;
-    
-    const fetchBooks = () => {
-        
-        // props.books.then((res) => {
-            // const data = res.data.data
-        // console.log(books)
-        // })
-        // const targetId = eval( props.books.targetId);
-        
-        BookApi.getAllBooks().then((res) => {
-        console.log(res)
-            switch (props.books.targetId) {
-                case 'author_id':
-                    const author_data = res.data.data.filter((data) => data.author_id == props.books.idValue)
-                    setBooks(author_data);
-                    break
-                case 'category_id':
-                    const category_data = res.data.data.filter(function (book) {
-                        if (Array.isArray(book.categories) && book.categories.length !== 0) {
-                            for (let category of book.categories) {
-                                if (category.id == props.books.idValue) {
-                                    return true
-                                }
-                            } 
-                            // console.log(book.categories)
-                            return false
-                        } else {
-                            return false
-                        }
-                    })
-                    
-                    
-                    setBooks(category_data);
-                    break
-                default:
-                    const default_data = res.data.data
-                    setBooks(default_data);
-                    break
-        }
-            
-        
-        })
-        
-    }
-    
-    
-      
-    useEffect(() => fetchBooks(), [])
     const renderPosts = () => {
-        console.log(props.books)
+        
         if (!books) {
             return (<tr>
                 <td>No book to show</td>
@@ -154,14 +99,27 @@ const RenderBooks = (props) => {
 
                     <td>
                         {/* <button className="btn btn-success mr-1" onClick={toBorrow()}>To Borrow</button> */}
-                        <div>
-                            { book.book_condition === "available"? <ToBorrow book_id={book.id} book_name={ book.name}/> : ""}
-                        
-                        
-                        
-                        </div>
+                        {Auth.only("auth") ?
                         <div className="row">
-                        <Link to={`books/edit/${book.id}`} className="btn btn-warning mr-1">Edit</Link>
+                            { book.book_condition === "available"? <div><ToBorrow book_id={book.id} book_name={ book.name}/><button onClick={
+                                    () => {
+                                        if (confirm("Are you sure u lost")) {
+                                            BookApi.lostBook(book.id).then(() => {
+                                                fetchBooks()
+                                            }).catch((err) => {
+                                                console.log(err)
+                                    } )
+                                }
+                                
+                            }
+                        } className="btn btn-outline-danger">Lost?</button></div> : ""}
+                        
+                        
+                        
+                        
+                        
+                                <Link to={`books/edit/${book.id}`} className="btn btn-warning mr-1">Edit</Link>
+                            <br />
                         <button onClick={
                             () => {
                                 BookApi.deleteBook(book.id).then(() => {
@@ -171,7 +129,12 @@ const RenderBooks = (props) => {
                                 } )
                             }
                         } className="btn btn-danger">Delete</button>
-                        </div>
+                        
+                        
+                            </div>
+                        
+                            : ""
+                    }
                         
                     </td>
                 </tr>
@@ -188,7 +151,7 @@ const RenderBooks = (props) => {
     
     // useEffect
     
-    return (<AppContainer title={props.title}>
+    return (<AppContainer >
         <div>
 <div className="container">
     <div className="row justify-content-center">
@@ -230,4 +193,4 @@ const RenderBooks = (props) => {
   </div>
     </AppContainer>)
 }
-export default RenderBooks;
+export default Render
